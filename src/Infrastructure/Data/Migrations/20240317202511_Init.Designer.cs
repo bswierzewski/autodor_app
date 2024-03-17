@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240317200037_Init")]
+    [Migration("20240317202511_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -39,6 +39,9 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
                     b.Property<string>("FakturaApiKey")
                         .HasColumnType("text");
 
@@ -46,9 +49,6 @@ namespace Infrastructure.Data.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("User")
                         .HasColumnType("text");
 
                     b.HasKey("Id");

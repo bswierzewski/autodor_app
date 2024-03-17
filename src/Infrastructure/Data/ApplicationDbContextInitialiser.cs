@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities.Settings;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -34,6 +35,7 @@ public class ApplicationDbContextInitialiser
     {
         try
         {
+            await _context.Database.EnsureDeletedAsync();
             await _context.Database.MigrateAsync();
         }
         catch (Exception ex)
@@ -61,9 +63,25 @@ public class ApplicationDbContextInitialiser
         // Default data
         // Seed, if necessary
 
-        //if (!_context.IFirmas.Any())
-        //{           
-        //    await _context.SaveChangesAsync();
-        //}
+        if (!_context.IFirmaSettings.Any())
+        {
+            var settings = new List<IFirma> 
+            {
+                new IFirma
+                {
+                    Email = "test@test.com",
+                    FakturaApiKey = "123456123456"
+                },
+                new IFirma
+                {
+                    Email = "api@api.com",
+                    FakturaApiKey = "qwertyqwerty"
+                },
+            };
+
+            await _context.AddRangeAsync(settings);
+
+            await _context.SaveChangesAsync();
+        }
     }
 }
