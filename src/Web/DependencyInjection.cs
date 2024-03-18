@@ -16,9 +16,7 @@ public static class DependencyInjection
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
-        services.AddFluentValidationRulesToSwagger();
-        
-        services.AddControllers();
+        services.AddFluentValidationRulesToSwagger();        
 
         // Customise default API behaviour
         services.Configure<ApiBehaviorOptions>(options =>
@@ -40,6 +38,7 @@ public static class DependencyInjection
             });
         services.AddAuthorization();
 
+        // DI services
         services.AddScoped<IUser, CurrentUser>();
 
         return services;

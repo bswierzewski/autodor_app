@@ -1,6 +1,7 @@
 using Infrastructure;
 using Infrastructure.Data;
 using Web;
+using Web.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,17 +30,12 @@ if (app.Environment.IsDevelopment())
     await app.InitialiseDatabaseAsync();
 }
 
-// Cors enabled
 app.UseCors();
 
-// IDK
 app.UseAuthorization();
 
-// IDK
 app.UseExceptionHandler(options => { });
 
-// Map controllers folder to url path
-app.MapControllers();
+app.MapEndpoints();
 
-// Run app
 app.Run();

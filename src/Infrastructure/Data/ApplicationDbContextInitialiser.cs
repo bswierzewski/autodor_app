@@ -83,5 +83,47 @@ public class ApplicationDbContextInitialiser
 
             await _context.SaveChangesAsync();
         }
+
+        if (!_context.PolcarSettings.Any())
+        {
+            var settings = new List<Polcar>
+            {
+                new Polcar
+                {
+                    Id = 1,
+                    DistributorCode = "MTP"
+                },
+                new Polcar
+                {
+                    Id = 2,
+                    DistributorCode = "SWE"
+                },
+            };
+
+            await _context.AddRangeAsync(settings);
+
+            await _context.SaveChangesAsync();
+        }
+
+        if (!_context.MongoDBSettings.Any())
+        {
+            var settings = new List<MongoDB>
+            {
+                new MongoDB
+                {
+                    Id = 1,
+                    CollectionName = "mongus"
+                },
+                new MongoDB
+                {
+                    Id = 2,
+                    CollectionName = "poslwr"
+                },
+            };
+
+            await _context.AddRangeAsync(settings);
+
+            await _context.SaveChangesAsync();
+        }
     }
 }
