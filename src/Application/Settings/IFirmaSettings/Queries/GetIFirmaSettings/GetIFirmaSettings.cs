@@ -1,18 +1,18 @@
 ﻿using Application.Common.Interfaces;
 using AutoMapper;
 
-namespace Application.Snippets.Queries.GetSnippets
+namespace Application.Settings.IFirmaSettings.Queries
 {
     public record GetIFirmaSettingsQuery : IRequest<List<IFirmaSettingDto>>
     {
     }
 
-    public class GetSnippetsQueryHandler : IRequestHandler<GetIFirmaSettingsQuery, List<IFirmaSettingDto>>
+    public class GetIFirmaSettingsQueryHandler : IRequestHandler<GetIFirmaSettingsQuery, List<IFirmaSettingDto>>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetSnippetsQueryHandler(IApplicationDbContext context, IMapper mapper)
+        public GetIFirmaSettingsQueryHandler(IApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -20,9 +20,9 @@ namespace Application.Snippets.Queries.GetSnippets
 
         public async Task<List<IFirmaSettingDto>> Handle(GetIFirmaSettingsQuery request, CancellationToken cancellationToken)
         {
-            var result = await _context.IFirmaSettings.ToListAsync(cancellationToken: cancellationToken);
+            var settings = await _context.IFirmaSettings.ToListAsync(cancellationToken: cancellationToken);
 
-            return _mapper.Map<List<IFirmaSettingDto>>(result);
+            return _mapper.Map<List<IFirmaSettingDto>>(settings);
         }
     }
 }

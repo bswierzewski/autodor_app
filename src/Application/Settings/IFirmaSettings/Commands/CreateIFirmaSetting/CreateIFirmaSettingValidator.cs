@@ -1,6 +1,4 @@
-﻿using Application.Snippets.Commands.CreateSnippet;
-
-namespace Application.Snippets.Commands.CreateTodoItem;
+﻿namespace Application.Settings.IFirmaSettings.Commands;
 
 public class CreateIFirmaSettingValidator : AbstractValidator<CreateIFirmaSettingCommand>
 {

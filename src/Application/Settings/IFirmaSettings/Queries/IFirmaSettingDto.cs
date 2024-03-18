@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Entities.Settings;
 
-namespace Application.Snippets.Queries;
+namespace Application.Settings.IFirmaSettings.Queries;
 
 public class IFirmaSettingDto
 {

@@ -1,6 +1,6 @@
 ﻿using Application.Common.Interfaces;
 
-namespace Application.Snippets.Commands.DeleteSnippet;
+namespace Application.Settings.IFirmaSettings.Commands;
 
 public record DeleteIFirmaSettingCommand(int Id) : IRequest<int>;
 
@@ -20,7 +20,7 @@ public class DeleteIFirmaSettingCommandHandler : IRequestHandler<DeleteIFirmaSet
         var entity = await _context.IFirmaSettings.FindAsync(request.Id, cancellationToken);
 
         if (entity == null)
-            throw new Exception("IFirmaSettings does't exist");
+            throw new Exception("IFirma settings does't exist");
 
         _context.IFirmaSettings.Remove(entity);
 

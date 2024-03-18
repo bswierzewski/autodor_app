@@ -1,10 +1,10 @@
 ﻿using Application.Common.Interfaces;
 using AutoMapper;
 
-namespace Application.Snippets.Commands.CreateSnippet;
+namespace Application.Settings.IFirmaSettings.Commands;
 
 public record CreateIFirmaSettingCommand() : IRequest<int>
-{    
+{
 
 }
 
@@ -21,7 +21,6 @@ public class CreateIFirmaSettingCommandHandler : IRequestHandler<CreateIFirmaSet
 
     public async Task<int> Handle(CreateIFirmaSettingCommand request, CancellationToken cancellationToken)
     {
-
         return await Task.FromResult(0);
     }
 }
