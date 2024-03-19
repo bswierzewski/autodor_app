@@ -4,16 +4,6 @@ namespace Web.Infrastructure;
 
 public static class WebApplicationExtensions
 {
-    public static RouteGroupBuilder MapGroup(this WebApplication app, EndpointGroupBase group)
-    {
-        var groupName = group.GetType().Name;
-
-        return app
-            .MapGroup($"/api/{group.CustomPath}{groupName}")
-            .WithTags(groupName)
-            .WithOpenApi();
-    }
-
     public static WebApplication MapEndpoints(this WebApplication app)
     {
         var endpointGroupType = typeof(EndpointGroupBase);

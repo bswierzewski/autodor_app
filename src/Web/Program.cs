@@ -31,11 +31,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors();
-
 app.UseAuthorization();
-
 app.UseExceptionHandler(options => { });
-
 app.MapEndpoints();
 
 app.Run();

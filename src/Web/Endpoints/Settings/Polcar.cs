@@ -7,11 +7,9 @@ namespace Web.Endpoints.Settings;
 
 public class Polcar : EndpointGroupBase
 {
-    public override string CustomPath => "settings/";
-
     public override void Map(WebApplication app)
     {
-        app.MapGroup(this)
+        app.MapGroup($"{RoutePrefix}/settings/polcar")
             //.RequireAuthorization()
             .MapGet(GetPolcarSettings)
             .MapGet(GetPolcarSetting, "{id}")

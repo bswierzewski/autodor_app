@@ -7,11 +7,9 @@ namespace Web.Endpoints.Settings;
 
 public class IFirma : EndpointGroupBase
 {
-    public override string CustomPath => "settings/";
-
     public override void Map(WebApplication app)
     {
-        app.MapGroup(this)
+        app.MapGroup($"{RoutePrefix}/settings/ifirma")
             //.RequireAuthorization()
             .MapGet(GetIFirmaSettings)
             .MapGet(GetIFirmaSetting, "{id}")
