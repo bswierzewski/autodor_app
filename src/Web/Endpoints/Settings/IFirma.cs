@@ -7,12 +7,15 @@ namespace Web.Endpoints.Settings;
 
 public class IFirma : EndpointGroupBase
 {
+    public override string GroupName => "settings/ifirma";
+
     public override void Map(WebApplication app)
     {
-        app.MapGroup($"{RoutePrefix}/settings/ifirma")
+        app.MapGroup(this)
             //.RequireAuthorization()
             .MapGet(GetIFirmaSettings)
             .MapGet(GetIFirmaSetting, "{id}")
+            .MapPost(CreateIFirmaSetting)
             .MapDelete(DeleteIFirmaSetting, "{id}");
     }
 
@@ -26,9 +29,15 @@ public class IFirma : EndpointGroupBase
         return await sender.Send(new GetIFirmaSettingQuery(id));
     }
 
+    public async Task<int> CreateIFirmaSetting(ISender sender, CreateIFirmaSettingCommand command)
+    {
+        return await sender.Send(command);
+    }
+
     public async Task<IResult> DeleteIFirmaSetting(ISender sender, int id)
     {
         await sender.Send(new DeleteIFirmaSettingCommand(id));
+
         return Results.NoContent();
     }
 }

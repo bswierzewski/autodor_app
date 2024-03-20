@@ -4,6 +4,13 @@ public class CreateMongoDBSettingValidator : AbstractValidator<CreateMongoDBSett
 {
     public CreateMongoDBSettingValidator()
     {
+        RuleFor(x => x.ConnectionURI)
+            .NotEmpty();
 
+        RuleFor(x => x.DatabaseName)
+            .NotEmpty();
+
+        RuleFor(x => x.CollectionName)
+            .NotEmpty();
     }
 }

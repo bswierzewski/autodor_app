@@ -7,12 +7,15 @@ namespace Web.Endpoints.Settings;
 
 public class Polcar : EndpointGroupBase
 {
+    public override string GroupName => "settings/polcar";
+
     public override void Map(WebApplication app)
     {
-        app.MapGroup($"{RoutePrefix}/settings/polcar")
+        app.MapGroup(this)
             //.RequireAuthorization()
             .MapGet(GetPolcarSettings)
             .MapGet(GetPolcarSetting, "{id}")
+            .MapPost(CreatePolcarSetting)
             .MapDelete(DeletePolcarSetting, "{id}");
     }
 
@@ -26,9 +29,15 @@ public class Polcar : EndpointGroupBase
         return await sender.Send(new GetPolcarSettingQuery(id));
     }
 
+    public async Task<int> CreatePolcarSetting(ISender sender, CreatePolcarSettingCommand command)
+    {
+        return await sender.Send(command);
+    }
+
     public async Task<IResult> DeletePolcarSetting(ISender sender, int id)
     {
         await sender.Send(new DeletePolcarSettingCommand(id));
+
         return Results.NoContent();
     }
 }

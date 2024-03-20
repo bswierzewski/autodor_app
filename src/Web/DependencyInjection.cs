@@ -19,9 +19,9 @@ public static class DependencyInjection
         services.AddFluentValidationRulesToSwagger();
 
         // Customise default API behaviour
-        services.Configure<ApiBehaviorOptions>(options =>
-            options.SuppressModelStateInvalidFilter = true);
-        services.AddExceptionHandler<CustomExceptionHandler>();
+        //services.Configure<ApiBehaviorOptions>(options =>
+        //    options.SuppressModelStateInvalidFilter = true);
+        //services.AddExceptionHandler<CustomExceptionHandler>();
         services.AddHttpContextAccessor();
 
         // Authentication and Authorization

@@ -2,6 +2,6 @@
 
 public abstract class EndpointGroupBase
 {
-    public virtual string RoutePrefix { get; } = "/api";
+    public virtual string GroupName { get; } = null;
     public abstract void Map(WebApplication app);
 }

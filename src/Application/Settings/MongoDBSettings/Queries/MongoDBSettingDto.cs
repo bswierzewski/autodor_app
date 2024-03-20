@@ -1,17 +1,9 @@
-﻿using AutoMapper;
-using Domain.Entities.Settings;
-
-namespace Application.Settings.MongoDBSettings.Queries;
+﻿namespace Application.Settings.MongoDBSettings.Queries;
 
 public class MongoDBSettingDto
 {
     public int Id { get; set; }
-
-    private class Mapping : Profile
-    {
-        public Mapping()
-        {
-            CreateMap<MongoDB, MongoDBSettingDto>();
-        }
-    }
+    public string ConnectionURI { get; set; }
+    public string DatabaseName { get; set; }
+    public string CollectionName { get; set; }
 }

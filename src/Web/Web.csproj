@@ -20,8 +20,8 @@
 	</ItemGroup>
 
 	<!-- Replace * with - -->
-	<!-- <Target Name="OpenAPI" AfterTargets="Build" Condition="$(Configuration)=='Debug'">
-		<Exec Command="swagger tofile **output ../../openapi/snippetApi.yaml **yaml $(OutputPath)$(AssemblyName).dll v1" WorkingDirectory="$(ProjectDir)" />
-	</Target> -->
+	<Target Name="OpenAPI" AfterTargets="Build" Condition="$(Configuration)=='Debug'">
+		<Exec Command="swagger tofile --output ../../docs/mtparts.yaml --yaml $(OutputPath)$(AssemblyName).dll v1" WorkingDirectory="$(ProjectDir)" />
+	</Target>
 
 </Project>

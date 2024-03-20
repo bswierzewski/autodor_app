@@ -91,11 +91,19 @@ public class ApplicationDbContextInitialiser
                 new Polcar
                 {
                     Id = 1,
+                    BranchId = 11,
+                    LanguageId = 111,
+                    Login = "login_1",
+                    Password = "password_1",
                     DistributorCode = "MTP"
                 },
                 new Polcar
                 {
                     Id = 2,
+                    BranchId = 22,
+                    LanguageId = 222,
+                    Login = "login_2",
+                    Password = "password_2",
                     DistributorCode = "SWE"
                 },
             };
@@ -112,11 +120,15 @@ public class ApplicationDbContextInitialiser
                 new MongoDB
                 {
                     Id = 1,
+                    ConnectionURI = "ConnectionURI_mongus",
+                    DatabaseName = "DatabaseName_mongus",                    
                     CollectionName = "mongus"
                 },
                 new MongoDB
                 {
                     Id = 2,
+                    ConnectionURI = "ConnectionURI_poslwr",
+                    DatabaseName = "DatabaseName_poslwr",
                     CollectionName = "poslwr"
                 },
             };

@@ -1,11 +1,14 @@
 ﻿using Application.Common.Interfaces;
 using AutoMapper;
+using Domain.Entities.Settings;
 
 namespace Application.Settings.MongoDBSettings.Commands;
 
 public record CreateMongoDBSettingCommand() : IRequest<int>
 {
-
+    public string ConnectionURI { get; set; }
+    public string DatabaseName { get; set; }
+    public string CollectionName { get; set; }
 }
 
 public class CreateMongoDBSettingCommandHandler : IRequestHandler<CreateMongoDBSettingCommand, int>
@@ -21,6 +24,12 @@ public class CreateMongoDBSettingCommandHandler : IRequestHandler<CreateMongoDBS
 
     public async Task<int> Handle(CreateMongoDBSettingCommand request, CancellationToken cancellationToken)
     {
-        return await Task.FromResult(0);
+        var setting = _mapper.Map<MongoDB>(request);
+
+        _context.MongoDBSettings.Add(setting);
+
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return setting.Id;
     }
 }
