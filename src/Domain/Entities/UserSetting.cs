@@ -6,11 +6,11 @@ namespace Domain.Entities
     {
         public string Email { get; set; }
 
-        public int IFirmaId { get; set; }
-        public IFirma IFirma { get; set; }
-        public int PolcarId { get; set; }
-        public Polcar Polcar { get; set; }
-        public int MongoDBId { get; set; }
-        public MongoDB MongoDB { get; set; }
+        public int IFirmaSettingId { get; set; }
+        public IFirmaSetting IFirmaSetting { get; set; }
+        public int PolcarSettingId { get; set; }
+        public PolcarSetting PolcarSetting { get; set; }
+        public int MongoDBSettingId { get; set; }
+        public MongoDBSetting MongoDBSetting { get; set; }
     }
 }

@@ -10,9 +10,9 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
-    public DbSet<IFirma> IFirmaSettings => Set<IFirma>();
-    public DbSet<Polcar> PolcarSettings => Set<Polcar>();
-    public DbSet<MongoDB> MongoDBSettings => Set<MongoDB>();
+    public DbSet<IFirmaSetting> IFirmaSettings => Set<IFirmaSetting>();
+    public DbSet<PolcarSetting> PolcarSettings => Set<PolcarSetting>();
+    public DbSet<MongoDBSetting> MongoDBSettings => Set<MongoDBSetting>();
     public DbSet<UserSetting> UserSettings => Set<UserSetting>();
 
     protected override void OnModelCreating(ModelBuilder builder)

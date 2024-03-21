@@ -23,7 +23,7 @@ public class CreateIFirmaSettingCommandHandler : IRequestHandler<CreateIFirmaSet
 
     public async Task<int> Handle(CreateIFirmaSettingCommand request, CancellationToken cancellationToken)
     {
-        var setting = _mapper.Map<IFirma>(request);
+        var setting = _mapper.Map<IFirmaSetting>(request);
 
         _context.IFirmaSettings.Add(setting);
         

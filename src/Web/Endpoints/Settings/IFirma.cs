@@ -12,7 +12,7 @@ public class IFirma : EndpointGroupBase
     public override void Map(WebApplication app)
     {
         app.MapGroup(this)
-            //.RequireAuthorization()
+            .RequireAuthorization()
             .MapGet(GetIFirmaSettings)
             .MapGet(GetIFirmaSetting, "{id}")
             .MapPost(CreateIFirmaSetting)

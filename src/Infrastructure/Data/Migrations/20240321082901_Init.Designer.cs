@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240317202511_Init")]
+    [Migration("20240321082901_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace Infrastructure.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entities.Settings.IFirma", b =>
+            modelBuilder.Entity("Domain.Entities.Settings.IFirmaSetting", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,7 +56,7 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("IFirmaSettings");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Settings.MongoDB", b =>
+            modelBuilder.Entity("Domain.Entities.Settings.MongoDBSetting", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -90,7 +90,7 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("MongoDBSettings");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Settings.Polcar", b =>
+            modelBuilder.Entity("Domain.Entities.Settings.PolcarSetting", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -147,7 +147,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<int>("IFirmaId")
+                    b.Property<int>("IFirmaSettingId")
                         .HasColumnType("integer");
 
                     b.Property<DateTimeOffset>("LastModified")
@@ -156,48 +156,48 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
-                    b.Property<int>("MongoDBId")
+                    b.Property<int>("MongoDBSettingId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PolcarId")
+                    b.Property<int>("PolcarSettingId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IFirmaId");
+                    b.HasIndex("IFirmaSettingId");
 
-                    b.HasIndex("MongoDBId");
+                    b.HasIndex("MongoDBSettingId");
 
-                    b.HasIndex("PolcarId");
+                    b.HasIndex("PolcarSettingId");
 
                     b.ToTable("UserSettings");
                 });
 
             modelBuilder.Entity("Domain.Entities.UserSetting", b =>
                 {
-                    b.HasOne("Domain.Entities.Settings.IFirma", "IFirma")
+                    b.HasOne("Domain.Entities.Settings.IFirmaSetting", "IFirmaSetting")
                         .WithMany()
-                        .HasForeignKey("IFirmaId")
+                        .HasForeignKey("IFirmaSettingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Settings.MongoDB", "MongoDB")
+                    b.HasOne("Domain.Entities.Settings.MongoDBSetting", "MongoDBSetting")
                         .WithMany()
-                        .HasForeignKey("MongoDBId")
+                        .HasForeignKey("MongoDBSettingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Settings.Polcar", "Polcar")
+                    b.HasOne("Domain.Entities.Settings.PolcarSetting", "PolcarSetting")
                         .WithMany()
-                        .HasForeignKey("PolcarId")
+                        .HasForeignKey("PolcarSettingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("IFirma");
+                    b.Navigation("IFirmaSetting");
 
-                    b.Navigation("MongoDB");
+                    b.Navigation("MongoDBSetting");
 
-                    b.Navigation("Polcar");
+                    b.Navigation("PolcarSetting");
                 });
 #pragma warning restore 612, 618
         }

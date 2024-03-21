@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configurations;
 
-public class IFirmaSettingsConfiguration : IEntityTypeConfiguration<IFirma>
+public class IFirmaSettingsConfiguration : IEntityTypeConfiguration<IFirmaSetting>
 {
-    public void Configure(EntityTypeBuilder<IFirma> builder)
+    public void Configure(EntityTypeBuilder<IFirmaSetting> builder)
     {
     }
 }

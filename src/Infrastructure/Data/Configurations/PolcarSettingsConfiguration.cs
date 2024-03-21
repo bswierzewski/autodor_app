@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configurations;
 
-public class PolcarSettingsConfiguration : IEntityTypeConfiguration<Polcar>
+public class PolcarSettingsConfiguration : IEntityTypeConfiguration<PolcarSetting>
 {
-    public void Configure(EntityTypeBuilder<Polcar> builder)
+    public void Configure(EntityTypeBuilder<PolcarSetting> builder)
     {
     }
 }

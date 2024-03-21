@@ -26,7 +26,7 @@ public class CreatePolcarSettingCommandHandler : IRequestHandler<CreatePolcarSet
 
     public async Task<int> Handle(CreatePolcarSettingCommand request, CancellationToken cancellationToken)
     {
-        var setting = _mapper.Map<Polcar>(request);
+        var setting = _mapper.Map<PolcarSetting>(request);
 
         _context.PolcarSettings.Add(setting);
 

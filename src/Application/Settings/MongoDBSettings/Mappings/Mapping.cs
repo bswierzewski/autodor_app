@@ -9,9 +9,9 @@ namespace Application.Settings.MongoDBSettings.Mappings
     {
         public Mapping()
         {
-            CreateMap<MongoDB, MongoDBSettingDto>();
+            CreateMap<MongoDBSetting, MongoDBSettingDto>();
 
-            CreateMap<CreateMongoDBSettingCommand, MongoDB>();
+            CreateMap<CreateMongoDBSettingCommand, MongoDBSetting>();
         }
     }
 }

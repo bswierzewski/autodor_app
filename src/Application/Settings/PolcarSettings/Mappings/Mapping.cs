@@ -9,9 +9,9 @@ namespace Application.Settings.PolcarSettings.Mappings
     {
         public Mapping()
         {
-            CreateMap<Polcar, PolcarSettingDto>();
+            CreateMap<PolcarSetting, PolcarSettingDto>();
 
-            CreateMap<CreatePolcarSettingCommand, Polcar>();
+            CreateMap<CreatePolcarSettingCommand, PolcarSetting>();
         }
     }
 }

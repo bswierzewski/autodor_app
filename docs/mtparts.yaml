@@ -201,6 +201,72 @@ paths:
       responses:
         '200':
           description: OK
+  /api/settings/user:
+    get:
+      tags:
+        - settings/user
+      operationId: GetUserSettings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserSettingDto'
+    post:
+      tags:
+        - settings/user
+      operationId: CreateUserSetting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserSettingCommand'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+  '/api/settings/user/{id}':
+    get:
+      tags:
+        - settings/user
+      operationId: GetUserSetting
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSettingDto'
+    delete:
+      tags:
+        - settings/user
+      operationId: DeleteUserSetting
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
 components:
   schemas:
     CreateIFirmaSettingCommand:
@@ -258,6 +324,27 @@ components:
           type: integer
           format: int32
       additionalProperties: false
+    CreateUserSettingCommand:
+      required:
+        - email
+        - iFirmaSettingId
+        - mongoDBSettingId
+        - polcarSettingId
+      type: object
+      properties:
+        email:
+          minLength: 1
+          type: string
+        iFirmaSettingId:
+          type: integer
+          format: int32
+        polcarSettingId:
+          type: integer
+          format: int32
+        mongoDBSettingId:
+          type: integer
+          format: int32
+      additionalProperties: false
     IFirmaSettingDto:
       type: object
       properties:
@@ -308,4 +395,29 @@ components:
         languageId:
           type: integer
           format: int32
+      additionalProperties: false
+    UserSettingDto:
+      type: object
+      properties:
+        email:
+          type: string
+          nullable: true
+        fakturaEmail:
+          type: string
+          nullable: true
+        distributorCode:
+          type: string
+          nullable: true
+        branchId:
+          type: integer
+          format: int32
+        languageId:
+          type: integer
+          format: int32
+        databaseName:
+          type: string
+          nullable: true
+        collectionName:
+          type: string
+          nullable: true
       additionalProperties: false

@@ -9,9 +9,9 @@ namespace Application.Settings.IFirmaSettings.Mappings
     {
         public Mapping()
         {
-            CreateMap<IFirma, IFirmaSettingDto>();
+            CreateMap<IFirmaSetting, IFirmaSettingDto>();
 
-            CreateMap<CreateIFirmaSettingCommand, IFirma>();
+            CreateMap<CreateIFirmaSettingCommand, IFirmaSetting>();
         }
     }
 }

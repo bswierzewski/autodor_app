@@ -77,9 +77,9 @@ namespace Infrastructure.Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Email = table.Column<string>(type: "text", nullable: true),
-                    IFirmaId = table.Column<int>(type: "integer", nullable: false),
-                    PolcarId = table.Column<int>(type: "integer", nullable: false),
-                    MongoDBId = table.Column<int>(type: "integer", nullable: false),
+                    IFirmaSettingId = table.Column<int>(type: "integer", nullable: false),
+                    PolcarSettingId = table.Column<int>(type: "integer", nullable: false),
+                    MongoDBSettingId = table.Column<int>(type: "integer", nullable: false),
                     Created = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     LastModified = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
@@ -89,39 +89,39 @@ namespace Infrastructure.Data.Migrations
                 {
                     table.PrimaryKey("PK_UserSettings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserSettings_IFirmaSettings_IFirmaId",
-                        column: x => x.IFirmaId,
+                        name: "FK_UserSettings_IFirmaSettings_IFirmaSettingId",
+                        column: x => x.IFirmaSettingId,
                         principalTable: "IFirmaSettings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserSettings_MongoDBSettings_MongoDBId",
-                        column: x => x.MongoDBId,
+                        name: "FK_UserSettings_MongoDBSettings_MongoDBSettingId",
+                        column: x => x.MongoDBSettingId,
                         principalTable: "MongoDBSettings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserSettings_PolcarSettings_PolcarId",
-                        column: x => x.PolcarId,
+                        name: "FK_UserSettings_PolcarSettings_PolcarSettingId",
+                        column: x => x.PolcarSettingId,
                         principalTable: "PolcarSettings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserSettings_IFirmaId",
+                name: "IX_UserSettings_IFirmaSettingId",
                 table: "UserSettings",
-                column: "IFirmaId");
+                column: "IFirmaSettingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserSettings_MongoDBId",
+                name: "IX_UserSettings_MongoDBSettingId",
                 table: "UserSettings",
-                column: "MongoDBId");
+                column: "MongoDBSettingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserSettings_PolcarId",
+                name: "IX_UserSettings_PolcarSettingId",
                 table: "UserSettings",
-                column: "PolcarId");
+                column: "PolcarSettingId");
         }
 
         /// <inheritdoc />

@@ -24,7 +24,7 @@ public class CreateMongoDBSettingCommandHandler : IRequestHandler<CreateMongoDBS
 
     public async Task<int> Handle(CreateMongoDBSettingCommand request, CancellationToken cancellationToken)
     {
-        var setting = _mapper.Map<MongoDB>(request);
+        var setting = _mapper.Map<MongoDBSetting>(request);
 
         _context.MongoDBSettings.Add(setting);
 

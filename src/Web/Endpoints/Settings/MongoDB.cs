@@ -12,7 +12,7 @@ public class MongoDB : EndpointGroupBase
     public override void Map(WebApplication app)
     {
         app.MapGroup(this)
-            //.RequireAuthorization()
+            .RequireAuthorization()
             .MapGet(GetMongoDBSettings)
             .MapGet(GetMongoDBSetting, "{id}")
             .MapPost(CreateMongoDBSetting)
