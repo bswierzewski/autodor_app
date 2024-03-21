@@ -4,7 +4,7 @@ namespace Domain.Entities
 {
     public class UserSetting : BaseAuditableEntity
     {
-        public string Email { get; set; }
+        public string Auth0Id { get; set; }
 
         public int IFirmaSettingId { get; set; }
         public IFirmaSetting IFirmaSetting { get; set; }

@@ -5,9 +5,9 @@ using Web.Infrastructure;
 
 namespace Web.Endpoints.Settings;
 
-public class MongoDB : EndpointGroupBase
+public class MongoDBSettings : EndpointGroupBase
 {
-    public override string GroupName => "settings/mongodb";
+    public override string GroupName => "settings/mongodbSettings";
 
     public override void Map(WebApplication app)
     {

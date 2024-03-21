@@ -5,9 +5,9 @@ using Web.Infrastructure;
 
 namespace Web.Endpoints.Settings;
 
-public class IFirma : EndpointGroupBase
+public class IFirmaSettings : EndpointGroupBase
 {
-    public override string GroupName => "settings/ifirma";
+    public override string GroupName => "settings/ifirmaSettings";
 
     public override void Map(WebApplication app)
     {

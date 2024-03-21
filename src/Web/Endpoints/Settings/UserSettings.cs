@@ -5,9 +5,9 @@ using Web.Infrastructure;
 
 namespace Web.Endpoints.Settings;
 
-public class User : EndpointGroupBase
+public class UserSettings : EndpointGroupBase
 {
-    public override string GroupName => "settings/user";
+    public override string GroupName => "settings/userSettings";
 
     public override void Map(WebApplication app)
     {

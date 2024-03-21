@@ -76,7 +76,7 @@ namespace Infrastructure.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Email = table.Column<string>(type: "text", nullable: true),
+                    Auth0Id = table.Column<string>(type: "text", nullable: true),
                     IFirmaSettingId = table.Column<int>(type: "integer", nullable: false),
                     PolcarSettingId = table.Column<int>(type: "integer", nullable: false),
                     MongoDBSettingId = table.Column<int>(type: "integer", nullable: false),

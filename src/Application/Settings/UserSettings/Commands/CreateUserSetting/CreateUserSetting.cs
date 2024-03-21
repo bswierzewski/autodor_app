@@ -6,7 +6,7 @@ namespace Application.Settings.UserSettings.Commands;
 
 public record CreateUserSettingCommand() : IRequest<int>
 {
-    public string Email { get; set; }
+    public string Auth0Id { get; set; }
     public int IFirmaSettingId { get; set; }
     public int PolcarSettingId { get; set; }
     public int MongoDBSettingId { get; set; }

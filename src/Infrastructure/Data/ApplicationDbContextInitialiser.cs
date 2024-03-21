@@ -120,14 +120,14 @@ public class ApplicationDbContextInitialiser
         {
             new UserSetting
             {
-                Email = "test@test.com",
+                Auth0Id = "test@test.com",
                 IFirmaSetting = iFirmaSettings[0],
                 MongoDBSetting = mongoDBSettings[0],
                 PolcarSetting = polcarSettings[0]
             },
             new UserSetting
             {
-                Email = "two@two.net.com",
+                Auth0Id = "two@two.net.com",
                 IFirmaSetting = iFirmaSettings[1],
                 MongoDBSetting = mongoDBSettings[1],
                 PolcarSetting = polcarSettings[1]

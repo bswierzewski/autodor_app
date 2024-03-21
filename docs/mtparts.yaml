@@ -3,10 +3,24 @@ info:
   title: 'Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'
   version: '1.0'
 paths:
-  /api/settings/ifirma:
+  /api/Orders:
     get:
       tags:
-        - settings/ifirma
+        - Orders
+      operationId: GetOrders
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderDto'
+  /api/settings/ifirmaSettings:
+    get:
+      tags:
+        - settings/ifirmaSettings
       operationId: GetIFirmaSettings
       responses:
         '200':
@@ -19,7 +33,7 @@ paths:
                   $ref: '#/components/schemas/IFirmaSettingDto'
     post:
       tags:
-        - settings/ifirma
+        - settings/ifirmaSettings
       operationId: CreateIFirmaSetting
       requestBody:
         content:
@@ -34,10 +48,10 @@ paths:
               schema:
                 type: integer
                 format: int32
-  '/api/settings/ifirma/{id}':
+  '/api/settings/ifirmaSettings/{id}':
     get:
       tags:
-        - settings/ifirma
+        - settings/ifirmaSettings
       operationId: GetIFirmaSetting
       parameters:
         - name: id
@@ -56,7 +70,7 @@ paths:
                 $ref: '#/components/schemas/IFirmaSettingDto'
     delete:
       tags:
-        - settings/ifirma
+        - settings/ifirmaSettings
       operationId: DeleteIFirmaSetting
       parameters:
         - name: id
@@ -69,10 +83,10 @@ paths:
       responses:
         '200':
           description: OK
-  /api/settings/mongodb:
+  /api/settings/mongodbSettings:
     get:
       tags:
-        - settings/mongodb
+        - settings/mongodbSettings
       operationId: GetMongoDBSettings
       responses:
         '200':
@@ -85,7 +99,7 @@ paths:
                   $ref: '#/components/schemas/MongoDBSettingDto'
     post:
       tags:
-        - settings/mongodb
+        - settings/mongodbSettings
       operationId: CreateMongoDBSetting
       requestBody:
         content:
@@ -100,10 +114,10 @@ paths:
               schema:
                 type: integer
                 format: int32
-  '/api/settings/mongodb/{id}':
+  '/api/settings/mongodbSettings/{id}':
     get:
       tags:
-        - settings/mongodb
+        - settings/mongodbSettings
       operationId: GetMongoDBSetting
       parameters:
         - name: id
@@ -122,7 +136,7 @@ paths:
                 $ref: '#/components/schemas/MongoDBSettingDto'
     delete:
       tags:
-        - settings/mongodb
+        - settings/mongodbSettings
       operationId: DeleteMongoDBSetting
       parameters:
         - name: id
@@ -135,10 +149,10 @@ paths:
       responses:
         '200':
           description: OK
-  /api/settings/polcar:
+  /api/settings/polcarSettings:
     get:
       tags:
-        - settings/polcar
+        - settings/polcarSettings
       operationId: GetPolcarSettings
       responses:
         '200':
@@ -151,7 +165,7 @@ paths:
                   $ref: '#/components/schemas/PolcarSettingDto'
     post:
       tags:
-        - settings/polcar
+        - settings/polcarSettings
       operationId: CreatePolcarSetting
       requestBody:
         content:
@@ -166,10 +180,10 @@ paths:
               schema:
                 type: integer
                 format: int32
-  '/api/settings/polcar/{id}':
+  '/api/settings/polcarSettings/{id}':
     get:
       tags:
-        - settings/polcar
+        - settings/polcarSettings
       operationId: GetPolcarSetting
       parameters:
         - name: id
@@ -188,7 +202,7 @@ paths:
                 $ref: '#/components/schemas/PolcarSettingDto'
     delete:
       tags:
-        - settings/polcar
+        - settings/polcarSettings
       operationId: DeletePolcarSetting
       parameters:
         - name: id
@@ -201,10 +215,10 @@ paths:
       responses:
         '200':
           description: OK
-  /api/settings/user:
+  /api/settings/userSettings:
     get:
       tags:
-        - settings/user
+        - settings/userSettings
       operationId: GetUserSettings
       responses:
         '200':
@@ -217,7 +231,7 @@ paths:
                   $ref: '#/components/schemas/UserSettingDto'
     post:
       tags:
-        - settings/user
+        - settings/userSettings
       operationId: CreateUserSetting
       requestBody:
         content:
@@ -232,10 +246,10 @@ paths:
               schema:
                 type: integer
                 format: int32
-  '/api/settings/user/{id}':
+  '/api/settings/userSettings/{id}':
     get:
       tags:
-        - settings/user
+        - settings/userSettings
       operationId: GetUserSetting
       parameters:
         - name: id
@@ -254,7 +268,7 @@ paths:
                 $ref: '#/components/schemas/UserSettingDto'
     delete:
       tags:
-        - settings/user
+        - settings/userSettings
       operationId: DeleteUserSetting
       parameters:
         - name: id
@@ -326,13 +340,13 @@ components:
       additionalProperties: false
     CreateUserSettingCommand:
       required:
-        - email
+        - auth0Id
         - iFirmaSettingId
         - mongoDBSettingId
         - polcarSettingId
       type: object
       properties:
-        email:
+        auth0Id:
           minLength: 1
           type: string
         iFirmaSettingId:
@@ -373,6 +387,9 @@ components:
         collectionName:
           type: string
           nullable: true
+      additionalProperties: false
+    OrderDto:
+      type: object
       additionalProperties: false
     PolcarSettingDto:
       type: object

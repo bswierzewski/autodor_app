@@ -5,9 +5,9 @@ using Web.Infrastructure;
 
 namespace Web.Endpoints.Settings;
 
-public class Polcar : EndpointGroupBase
+public class PolcarSettings : EndpointGroupBase
 {
-    public override string GroupName => "settings/polcar";
+    public override string GroupName => "settings/polcarSettings";
 
     public override void Map(WebApplication app)
     {

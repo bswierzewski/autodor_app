@@ -4,7 +4,7 @@ public class CreateUserSettingValidator : AbstractValidator<CreateUserSettingCom
 {
     public CreateUserSettingValidator()
     {
-        RuleFor(x => x.Email)
+        RuleFor(x => x.Auth0Id)
             .NotEmpty();
 
         RuleFor(x => x.IFirmaSettingId)
