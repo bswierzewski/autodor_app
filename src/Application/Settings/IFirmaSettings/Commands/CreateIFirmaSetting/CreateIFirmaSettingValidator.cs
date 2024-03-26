@@ -4,10 +4,10 @@ public class CreateIFirmaSettingValidator : AbstractValidator<CreateIFirmaSettin
 {
     public CreateIFirmaSettingValidator()
     {
-        RuleFor(x => x.Email)
+        RuleFor(x => x.User)
             .NotEmpty();
 
-        RuleFor(x => x.FakturaApiKey)
+        RuleFor(x => x.FakturaKey)
             .NotEmpty();
     }
 }

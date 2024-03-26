@@ -16,6 +16,7 @@ public class PolcarSettings : EndpointGroupBase
             .MapGet(GetPolcarSettings)
             .MapGet(GetPolcarSetting, "{id}")
             .MapPost(CreatePolcarSetting)
+            .MapPut(UpdatePolcarSetting, "{id}")
             .MapDelete(DeletePolcarSetting, "{id}");
     }
 
@@ -32,6 +33,13 @@ public class PolcarSettings : EndpointGroupBase
     public async Task<int> CreatePolcarSetting(ISender sender, CreatePolcarSettingCommand command)
     {
         return await sender.Send(command);
+    }
+
+    public async Task<IResult> UpdatePolcarSetting(ISender sender, int id, UpdatePolcarSettingCommand command)
+    {
+        if (id != command.Id) return Results.BadRequest();
+        await sender.Send(command);
+        return Results.NoContent();
     }
 
     public async Task<IResult> DeletePolcarSetting(ISender sender, int id)

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240321202414_Init")]
+    [Migration("20240322212850_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -39,16 +39,16 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FakturaApiKey")
+                    b.Property<string>("FakturaKey")
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("LastModified")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("User")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -67,16 +67,10 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("CollectionName")
                         .HasColumnType("text");
 
-                    b.Property<string>("ConnectionURI")
-                        .HasColumnType("text");
-
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("DatabaseName")
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("LastModified")

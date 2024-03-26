@@ -12,6 +12,8 @@ namespace Application.Settings.MongoDBSettings.Mappings
             CreateMap<MongoDBSetting, MongoDBSettingDto>();
 
             CreateMap<CreateMongoDBSettingCommand, MongoDBSetting>();
+
+            CreateMap<UpdateMongoDBSettingCommand, MongoDBSetting>();
         }
     }
 }

@@ -12,6 +12,8 @@ namespace Application.Settings.PolcarSettings.Mappings
             CreateMap<PolcarSetting, PolcarSettingDto>();
 
             CreateMap<CreatePolcarSettingCommand, PolcarSetting>();
+
+            CreateMap<UpdatePolcarSettingCommand, PolcarSetting>();
         }
     }
 }

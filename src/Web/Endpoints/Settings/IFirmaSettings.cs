@@ -16,6 +16,7 @@ public class IFirmaSettings : EndpointGroupBase
             .MapGet(GetIFirmaSettings)
             .MapGet(GetIFirmaSetting, "{id}")
             .MapPost(CreateIFirmaSetting)
+            .MapPut(UpdateIFirmaSetting, "{id}")
             .MapDelete(DeleteIFirmaSetting, "{id}");
     }
 
@@ -32,6 +33,13 @@ public class IFirmaSettings : EndpointGroupBase
     public async Task<int> CreateIFirmaSetting(ISender sender, CreateIFirmaSettingCommand command)
     {
         return await sender.Send(command);
+    }
+
+    public async Task<IResult> UpdateIFirmaSetting(ISender sender, int id, UpdateIFirmaSettingCommand command)
+    {
+        if (id != command.Id) return Results.BadRequest();
+        await sender.Send(command);
+        return Results.NoContent();
     }
 
     public async Task<IResult> DeleteIFirmaSetting(ISender sender, int id)

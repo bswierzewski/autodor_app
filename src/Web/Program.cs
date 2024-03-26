@@ -22,12 +22,12 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    // Seed database for development
+    await app.InitialiseDatabaseAsync();
+
     // Swagger
     app.UseSwagger();
     app.UseSwaggerUI();
-
-    // Seed database for development
-    await app.InitialiseDatabaseAsync();
 }
 
 app.UseCors();

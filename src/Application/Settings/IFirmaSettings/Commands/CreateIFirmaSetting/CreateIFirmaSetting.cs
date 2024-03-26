@@ -6,8 +6,8 @@ namespace Application.Settings.IFirmaSettings.Commands;
 
 public record CreateIFirmaSettingCommand() : IRequest<int>
 {
-    public string Email { get; set; }
-    public string FakturaApiKey { get; set; }
+    public string User { get; set; }
+    public string FakturaKey { get; set; }
 }
 
 public class CreateIFirmaSettingCommandHandler : IRequestHandler<CreateIFirmaSettingCommand, int>

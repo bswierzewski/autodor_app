@@ -13,9 +13,13 @@ namespace Web.Endpoints
                 .MapGet(GetOrders);
         }
 
-        public async Task<List<OrderDto>> GetOrders(ISender sender)
+        public async Task<IEnumerable<OrderDto>> GetOrders(ISender sender, DateTime dateFrom, DateTime dateTo)
         {
-            return await sender.Send(new GetOrdersQuery());
+            return await sender.Send(new GetOrdersQuery
+            {
+                DateFrom = dateFrom,
+                DateTo = dateTo
+            });
         }
     }
 }

@@ -2,6 +2,6 @@
 
 public class IFirmaSetting : BaseAuditableEntity
 {
-    public string Email { get; set; }
-    public string FakturaApiKey { get; set; }
+    public string User { get; set; }
+    public string FakturaKey { get; set; }
 }

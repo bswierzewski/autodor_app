@@ -9,9 +9,13 @@ namespace Application.Settings.IFirmaSettings.Mappings
     {
         public Mapping()
         {
-            CreateMap<IFirmaSetting, IFirmaSettingDto>();
+            CreateMap<IFirmaSetting, IFirmaSettingDto>()
+                .ForMember(d => d.FakturaApiKey, o => o.MapFrom(s => s.FakturaKey))
+                .ForMember(d => d.Email, o => o.MapFrom(s => s.User));
 
             CreateMap<CreateIFirmaSettingCommand, IFirmaSetting>();
+
+            CreateMap<UpdateIFirmaSettingCommand, IFirmaSetting>();
         }
     }
 }

@@ -16,6 +16,7 @@ public class MongoDBSettings : EndpointGroupBase
             .MapGet(GetMongoDBSettings)
             .MapGet(GetMongoDBSetting, "{id}")
             .MapPost(CreateMongoDBSetting)
+            .MapPut(UpdateMongoDBSetting, "{id}")
             .MapDelete(DeleteMongoDBSetting, "{id}");
     }
 
@@ -32,6 +33,13 @@ public class MongoDBSettings : EndpointGroupBase
     public async Task<int> CreateMongoDBSetting(ISender sender, CreateMongoDBSettingCommand command)
     {
         return await sender.Send(command);
+    }
+
+    public async Task<IResult> UpdateMongoDBSetting(ISender sender, int id, UpdateMongoDBSettingCommand command)
+    {
+        if (id != command.Id) return Results.BadRequest();
+        await sender.Send(command);
+        return Results.NoContent();
     }
 
     public async Task<IResult> DeleteMongoDBSetting(ISender sender, int id)
