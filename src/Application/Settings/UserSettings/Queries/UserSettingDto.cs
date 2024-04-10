@@ -2,6 +2,7 @@
 
 public class UserSettingDto
 {
+    public int Id { get; set; }
     public string Email { get; set; }
     public string FakturaEmail { get; set; }
     public string DistributorCode { get; set; }

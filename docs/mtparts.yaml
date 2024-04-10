@@ -667,6 +667,9 @@ components:
     UserSettingDto:
       type: object
       properties:
+        id:
+          type: integer
+          format: int32
         email:
           type: string
           nullable: true
