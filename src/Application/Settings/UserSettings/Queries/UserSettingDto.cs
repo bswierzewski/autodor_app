@@ -3,11 +3,11 @@
 public class UserSettingDto
 {
     public int Id { get; set; }
-    public string Email { get; set; }
-    public string FakturaEmail { get; set; }
-    public string DistributorCode { get; set; }
-    public int BranchId { get; set; }
-    public int LanguageId { get; set; }
-    public string DatabaseName { get; set; }
-    public string CollectionName { get; set; }
+    public string Auth0Id { get; set; }
+    public int IFirmaSettingId { get; set; }
+    public string IFirmaEmail { get; set; }
+    public int MongoDBSettingId { get; set; }
+    public string MongoDBCollection { get; set; }
+    public int PolcarSettingId { get; set; }
+    public string PolcarDistributorCode { get; set; }
 }

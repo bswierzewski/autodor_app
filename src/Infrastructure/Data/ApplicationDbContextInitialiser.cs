@@ -14,8 +14,6 @@ public static class InitialiserExtensions
         var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
 
         await initialiser.InitialiseAsync();
-
-        await initialiser.SeedAsync();
     }
 }
 
@@ -34,7 +32,6 @@ public class ApplicationDbContextInitialiser
     {
         try
         {
-            await _context.Database.EnsureDeletedAsync();
             await _context.Database.MigrateAsync();
         }
         catch (Exception ex)
@@ -42,47 +39,5 @@ public class ApplicationDbContextInitialiser
             _logger.LogError(ex, "An error occurred while initialising the database.");
             throw;
         }
-    }
-
-    public async Task SeedAsync()
-    {
-        try
-        {
-            await TrySeedAsync();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "An error occurred while seeding the database.");
-            throw;
-        }
-    }
-
-    public async Task TrySeedAsync()
-    {
-        // Default data
-        // Seed, if necessary
-
-        //if (!_context.MongoDBSettings.Any())
-        //{
-        //    var mongoDBSettings = new List<MongoDBSetting>
-        //{
-        //    new MongoDBSetting
-        //    {
-        //        ConnectionURI = "ConnectionURI_mongus",
-        //        DatabaseName = "DatabaseName_mongus",
-        //        CollectionName = "mongus"
-        //    },
-        //    new MongoDBSetting
-        //    {
-        //        ConnectionURI = "ConnectionURI_poslwr",
-        //        DatabaseName = "DatabaseName_poslwr",
-        //        CollectionName = "poslwr"
-        //    },
-        //};
-
-        //    await _context.AddRangeAsync(mongoDBSettings);
-
-        //    await _context.SaveChangesAsync();
-        //}
     }
 }

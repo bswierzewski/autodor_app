@@ -641,7 +641,6 @@ components:
       additionalProperties: false
     UpdateUserSettingCommand:
       required:
-        - auth0Id
         - iFirmaSettingId
         - id
         - mongoDBSettingId
@@ -651,9 +650,6 @@ components:
         id:
           type: integer
           format: int32
-        auth0Id:
-          minLength: 1
-          type: string
         iFirmaSettingId:
           type: integer
           format: int32
@@ -670,25 +666,25 @@ components:
         id:
           type: integer
           format: int32
-        email:
+        auth0Id:
           type: string
           nullable: true
-        fakturaEmail:
-          type: string
-          nullable: true
-        distributorCode:
-          type: string
-          nullable: true
-        branchId:
+        iFirmaSettingId:
           type: integer
           format: int32
-        languageId:
-          type: integer
-          format: int32
-        databaseName:
+        iFirmaEmail:
           type: string
           nullable: true
-        collectionName:
+        mongoDBSettingId:
+          type: integer
+          format: int32
+        mongoDBCollection:
+          type: string
+          nullable: true
+        polcarSettingId:
+          type: integer
+          format: int32
+        polcarDistributorCode:
           type: string
           nullable: true
       additionalProperties: false

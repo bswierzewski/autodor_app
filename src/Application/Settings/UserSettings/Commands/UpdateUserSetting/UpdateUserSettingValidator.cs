@@ -7,9 +7,6 @@ public class UpdateUserSettingValidator : AbstractValidator<UpdateUserSettingCom
         RuleFor(x => x.Id)
             .NotEmpty();
 
-        RuleFor(x => x.Auth0Id)
-            .NotEmpty();
-
         RuleFor(x => x.IFirmaSettingId)
             .NotEmpty();
         

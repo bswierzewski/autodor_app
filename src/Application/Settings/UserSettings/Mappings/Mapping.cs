@@ -10,11 +10,9 @@ namespace Application.Settings.UserSettings.Mappings
         public Mapping()
         {
             CreateMap<UserSetting, UserSettingDto>()
-                .ForMember(d => d.FakturaEmail, o => o.MapFrom(s => s.IFirmaSetting.User))
-                .ForMember(d => d.DistributorCode, o => o.MapFrom(s => s.PolcarSetting.DistributorCode))
-                .ForMember(d => d.BranchId, o => o.MapFrom(s => s.PolcarSetting.BranchId))
-                .ForMember(d => d.LanguageId, o => o.MapFrom(s => s.PolcarSetting.LanguageId))
-                .ForMember(d => d.CollectionName, o => o.MapFrom(s => s.MongoDBSetting.CollectionName));
+                .ForMember(d => d.IFirmaEmail, o => o.MapFrom(s => s.IFirmaSetting.User))
+                .ForMember(d => d.PolcarDistributorCode, o => o.MapFrom(s => s.PolcarSetting.DistributorCode))
+                .ForMember(d => d.MongoDBCollection, o => o.MapFrom(s => s.MongoDBSetting.CollectionName));
 
             CreateMap<CreateUserSettingCommand, UserSetting>();
 

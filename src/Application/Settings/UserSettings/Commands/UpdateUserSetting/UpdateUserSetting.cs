@@ -1,13 +1,11 @@
 ﻿using Application.Common.Interfaces;
 using AutoMapper;
-using Domain.Entities;
 
 namespace Application.Settings.UserSettings.Commands;
 
 public record UpdateUserSettingCommand() : IRequest<bool>
 {
     public int Id { get; set; }
-    public string Auth0Id { get; set; }
     public int IFirmaSettingId { get; set; }
     public int PolcarSettingId { get; set; }
     public int MongoDBSettingId { get; set; }
