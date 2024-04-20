@@ -17,6 +17,32 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Contractor'
+    post:
+      tags:
+        - Contractors
+      operationId: CreateContractor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateContractorCommand'
+      responses:
+        '200':
+          description: OK
+  '/api/Contractors/{id}':
+    delete:
+      tags:
+        - Contractors
+      operationId: DeleteContractor
+      parameters:
+        - name: id
+          in: path
+          style: simple
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
   /api/Orders:
     get:
       tags:
@@ -414,6 +440,28 @@ components:
           type: string
           nullable: true
         zipCode:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CreateContractorCommand:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        nip:
+          type: string
+          nullable: true
+        zipCode:
+          type: string
+          nullable: true
+        street:
           type: string
           nullable: true
         email:
