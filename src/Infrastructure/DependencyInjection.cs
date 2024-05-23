@@ -1,5 +1,4 @@
 ﻿using Application.Common.Interfaces;
-using Application.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Data.Interceptors;
 using Infrastructure.Services;
@@ -37,10 +36,9 @@ public static class DependencyInjection
         services.AddScoped<IDistributorsSalesService, DistributorsSalesService>();
         services.AddScoped<IProductsService, ProductsService>();
         services.AddScoped<IContractorService, ContractorService>();
-        services.AddScoped<IUserSetting, UserSettingService>();
 
         services.AddSingleton(s 
-            => new MongoClient(configuration["MongoDB:connectionURI"]).GetDatabase(configuration["MongoDB:databaseName"]));
+            => new MongoClient(configuration["Credentials:MongoDB:ConnectionURI"]).GetDatabase(configuration["Credentials:MongoDB:DatabaseName"]));
 
         return services;
     }

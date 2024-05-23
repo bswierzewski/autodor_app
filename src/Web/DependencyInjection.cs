@@ -1,4 +1,5 @@
 using Application.Common.Interfaces;
+using Application.Common.Options;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -39,6 +40,11 @@ public static class DependencyInjection
 
         // DI services
         services.AddScoped<IUser, CurrentUser>();
+
+        // Options
+        services.Configure<PolcarOptions>(configuration.GetSection("Credentials:Polcar"));
+        services.Configure<MongoDBOptions>(configuration.GetSection("Credentials:MongoDB"));
+        services.Configure<IFirmaOptions>(configuration.GetSection("Credentials:IFirma"));
 
         return services;
     }

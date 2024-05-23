@@ -1,32 +1,29 @@
 ﻿using Application.Common.Interfaces;
-using Application.Interfaces;
+using Application.Common.Options;
 using AutoMapper;
 using Domain.Entities;
+using Microsoft.Extensions.Options;
 using PolcarDistributorsSalesClient;
 
 namespace Infrastructure.Services.Polcar;
 
-public class DistributorsSalesService(IMapper mapper, IUserSetting userSetting) : IDistributorsSalesService
+public class DistributorsSalesService(IMapper mapper, IOptions<PolcarOptions> polcarOptions) : IDistributorsSalesService
 {
-    private readonly UserSetting _userSetting = userSetting.GetCurrentUserSetting();
     private readonly DistributorsSalesServiceSoapClient _client = new DistributorsSalesServiceSoapClient(DistributorsSalesServiceSoapClient.EndpointConfiguration.DistributorsSalesServiceSoap12);
 
     public async Task<IEnumerable<Order>> GetOrdersAsync(DateTime date)
     {
-        if (_userSetting == null)
-            throw new Exception("User doesn't have a settings. Please contact with admin");
-
         var response = await _client
             .GetListOfOrdersV3Async(
-            distributorCode: _userSetting.PolcarSetting.DistributorCode,
+            distributorCode: polcarOptions.Value.DistributorCode,
             getOpenOrdersOnly: false,
-            branchId: _userSetting.PolcarSetting.BranchId,
+            branchId: polcarOptions.Value.BranchId,
             dateFrom: date.Date,
             dateTo: date.AddDays(1).Date,
             getOrdersHeadersOnly: false,
-            login: _userSetting.PolcarSetting.Login,
-            password: _userSetting.PolcarSetting.Password,
-            languageId: _userSetting.PolcarSetting.LanguageId
+            login: polcarOptions.Value.Login,
+            password: polcarOptions.Value.Password,
+            languageId: polcarOptions.Value.LanguageId
             );
 
         var responseBody = response.Body.GetListOfOrdersV3Result;

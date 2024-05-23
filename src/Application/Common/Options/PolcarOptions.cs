@@ -1,6 +1,6 @@
-﻿namespace Domain.Entities.Settings;
+﻿namespace Application.Common.Options;
 
-public class PolcarSetting : BaseAuditableEntity
+public class PolcarOptions
 {
     public string Login { get; set; }
     public string Password { get; set; }

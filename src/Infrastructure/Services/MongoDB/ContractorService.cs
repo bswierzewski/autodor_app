@@ -1,7 +1,8 @@
 ﻿using Application.Common.Interfaces;
-using Application.Interfaces;
+using Application.Common.Options;
 using AutoMapper;
 using Infrastructure.MongoDB.Collections;
+using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -12,16 +13,11 @@ public class ContractorService : IContractorService
     private readonly IMapper _mapper;
     private readonly IMongoCollection<Contractor> _contractorCollection;
 
-    public ContractorService(IUserSetting userSetting, IMapper mapper, IMongoDatabase mongoDatabase)
+    public ContractorService(IOptions<MongoDBOptions> mongoDBOptions, IMapper mapper, IMongoDatabase mongoDatabase)
     {       
         _mapper = mapper;
 
-        var _userSetting = userSetting.GetCurrentUserSetting();
-
-        if (_userSetting.MongoDBSetting is null)
-            throw new Exception("MongoDB setting doesn't exist. Please contanct with admin");
-
-        _contractorCollection = mongoDatabase.GetCollection<Contractor>(_userSetting.MongoDBSetting.CollectionName);
+        _contractorCollection = mongoDatabase.GetCollection<Contractor>(mongoDBOptions.Value.CollectionName);
     }
 
     public async Task<IEnumerable<Domain.Entities.Contractor>> GetAsync()
