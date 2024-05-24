@@ -1,7 +1,6 @@
 ﻿using Application.Contractors.Commands.CreateContractor;
 using Application.Contractors.Commands.DeleteContractor;
 using Application.Contractors.Queries.GetContractors;
-using Application.Settings.IFirmaSettings.Commands;
 using Domain.Entities;
 using MediatR;
 using Web.Infrastructure;
