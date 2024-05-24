@@ -3,6 +3,7 @@ using Application.Contractors.Commands.DeleteContractor;
 using Application.Contractors.Queries.GetContractors;
 using Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Web.Infrastructure;
 
 namespace Web.Endpoints
@@ -15,7 +16,7 @@ namespace Web.Endpoints
                 .RequireAuthorization()
                 .MapGet(GetContractors)
                 .MapPost(CreateContractor)
-                .MapDelete(DeleteContractor, "{id}");
+                .MapDelete(DeleteContractor);
         }
 
         public async Task<IEnumerable<Contractor>> GetContractors(ISender sender)
@@ -30,9 +31,9 @@ namespace Web.Endpoints
             return Results.NoContent();
         }
 
-        public async Task<IResult> DeleteContractor(ISender sender, string id)
+        public async Task<IResult> DeleteContractor(ISender sender, [FromBody] DeleteContractorCommand command)
         {
-            await sender.Send(new DeleteContractorCommand(id));
+            await sender.Send(command);
 
             return Results.NoContent();
         }

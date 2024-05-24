@@ -29,17 +29,15 @@ paths:
       responses:
         '200':
           description: OK
-  '/api/Contractors/{id}':
     delete:
       tags:
         - Contractors
       operationId: DeleteContractor
-      parameters:
-        - name: id
-          in: path
-          style: simple
-          schema:
-            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteContractorCommand'
       responses:
         '200':
           description: OK
@@ -123,6 +121,15 @@ components:
         email:
           type: string
           nullable: true
+      additionalProperties: false
+    DeleteContractorCommand:
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          minLength: 1
+          type: string
       additionalProperties: false
     OrderDto:
       type: object

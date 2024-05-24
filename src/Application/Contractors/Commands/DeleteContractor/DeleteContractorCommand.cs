@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 
 namespace Application.Contractors.Commands.DeleteContractor;
+
 public record DeleteContractorCommand(string Id) : IRequest;
 
 public class DeleteContractorCommandHandler : IRequestHandler<DeleteContractorCommand>
