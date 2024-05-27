@@ -41,6 +41,19 @@ paths:
       responses:
         '200':
           description: OK
+  /api/Invoices:
+    post:
+      tags:
+        - Invoices
+      operationId: CreateInvoice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateInvoiceCommand'
+      responses:
+        '200':
+          description: OK
   /api/Orders:
     get:
       tags:
@@ -121,6 +134,28 @@ components:
         email:
           type: string
           nullable: true
+      additionalProperties: false
+    CreateInvoiceCommand:
+      required:
+        - orders
+      type: object
+      properties:
+        invoiceNumber:
+          type: integer
+          format: int32
+        saleDate:
+          type: string
+          format: date-time
+        issueDate:
+          type: string
+          format: date-time
+        orders:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderDto'
+        contractor:
+          $ref: '#/components/schemas/Contractor'
       additionalProperties: false
     DeleteContractorCommand:
       required:
