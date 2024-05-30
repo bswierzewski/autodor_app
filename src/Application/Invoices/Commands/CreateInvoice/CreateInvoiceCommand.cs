@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace Application.Invoices.Commands.CreateInvoice;
 
-public class CreateInvoiceCommand : IRequest<string>
+public class CreateInvoiceCommand : IRequest<InvoiceResponseDto>
 {
     public int InvoiceNumber { get; set; }
     public DateTime SaleDate { get; set; }
@@ -19,9 +19,9 @@ public class CreateInvoiceCommand : IRequest<string>
 public class CreateInvoiceCommandHandler(IMapper mapper,
     IFirmaService firmaService,
     IDistributorsSalesService distributorsSalesService,
-    IProductsService productsService) : IRequestHandler<CreateInvoiceCommand, string>
+    IProductsService productsService) : IRequestHandler<CreateInvoiceCommand, InvoiceResponseDto>
 {
-    public async Task<string> Handle(CreateInvoiceCommand request, CancellationToken cancellationToken)
+    public async Task<InvoiceResponseDto> Handle(CreateInvoiceCommand request, CancellationToken cancellationToken)
     {
         var items = new List<OrderItem>();
 
@@ -69,7 +69,7 @@ public class CreateInvoiceCommandHandler(IMapper mapper,
 
         var responseText = await response.Content.ReadAsStringAsync();
 
-        return JsonSerializer.Deserialize<InvoiceResponseDto>(responseText).ToString();
+        return JsonSerializer.Deserialize<InvoiceResponseDto>(responseText);
     }
 
     private InvoiceDto CreateInvoiceDto(CreateInvoiceCommand request, List<Pozycje> pozycje)

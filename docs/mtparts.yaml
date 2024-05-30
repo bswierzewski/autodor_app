@@ -54,6 +54,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceResponseDto'
   /api/Orders:
     get:
       tags:
@@ -166,6 +170,12 @@ components:
           minLength: 1
           type: string
       additionalProperties: false
+    InvoiceResponseDto:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseDto'
+      additionalProperties: false
     OrderDto:
       type: object
       properties:
@@ -212,4 +222,14 @@ components:
         totalPrice:
           type: number
           format: double
+      additionalProperties: false
+    ResponseDto:
+      type: object
+      properties:
+        kod:
+          type: integer
+          format: int32
+        informacja:
+          type: string
+          nullable: true
       additionalProperties: false
