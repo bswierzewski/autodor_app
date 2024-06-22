@@ -25,5 +25,5 @@ jobs:
         with:
           context: .
           file: src/Web/Dockerfile
-          tags: ninjabytetech/mtparts_api:latest
+          tags: ninjabytetech/autodor_api:latest
           push: true

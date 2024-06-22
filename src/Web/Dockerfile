@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /App
 
 # Copy everything
-COPY MTParts.sln MTParts.sln
+COPY Autodor.sln Autodor.sln
 COPY src ./src
 # Restore as distinct layers
 RUN dotnet restore
