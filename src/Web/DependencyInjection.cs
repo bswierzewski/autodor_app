@@ -41,11 +41,6 @@ public static class DependencyInjection
         // DI services
         services.AddScoped<IUser, CurrentUser>();
 
-        // Options
-        services.Configure<PolcarOptions>(configuration.GetSection("Credentials:Polcar"));
-        services.Configure<MongoDBOptions>(configuration.GetSection("Credentials:MongoDB"));
-        services.Configure<IFirmaOptions>(configuration.GetSection("Credentials:IFirma"));
-
         return services;
     }
 
