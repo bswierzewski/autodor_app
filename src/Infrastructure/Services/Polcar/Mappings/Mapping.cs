@@ -14,6 +14,7 @@ public class Mapping : Profile
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.OrderID))
             .ForMember(dest => dest.Number, opt => opt.MapFrom(src => src.PolcarOrderNumber))
             .ForMember(dest => dest.Person, opt => opt.MapFrom(src => src.OrderingPerson))
+            .ForMember(dest => dest.CustomerNumber, opt => opt.MapFrom(src => src.CustomerNumber))
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.OrderedItemsResponse));
 
         // Order Item

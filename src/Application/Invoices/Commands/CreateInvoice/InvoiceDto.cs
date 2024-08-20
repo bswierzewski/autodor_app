@@ -21,7 +21,7 @@ public class InvoiceDto
     public string Uwagi { get; set; }
     public bool WidocznyNumerGios { get; set; }
     public bool WidocznyNumerBdo { get; set; }
-    public int Numer { get; set; }
+    public int? Numer { get; set; }
     public string IdentyfikatorKontrahenta { get; set; }
     public string PrefiksUEKontrahenta { get; set; }
     public string NIPKontrahenta { get; set; }

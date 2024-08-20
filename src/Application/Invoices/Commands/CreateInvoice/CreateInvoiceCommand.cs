@@ -9,7 +9,7 @@ namespace Application.Invoices.Commands.CreateInvoice;
 
 public class CreateInvoiceCommand : IRequest<InvoiceResponseDto>
 {
-    public int InvoiceNumber { get; set; }
+    public int? InvoiceNumber { get; set; }
     public DateTime SaleDate { get; set; }
     public DateTime IssueDate { get; set; }
     public IEnumerable<OrderDto> Orders { get; set; }
@@ -78,7 +78,7 @@ public class CreateInvoiceCommandHandler(IMapper mapper,
 
         return new InvoiceDto()
         {
-            Numer = request.InvoiceNumber,
+            Numer = request.InvoiceNumber, // null (kolejny numer z podanej serii numeracji)
             MiejsceWystawienia = "Leszno",
             TerminPlatnosci = DateTime.Today.AddDays(14).ToString("yyyy-MM-dd"),
             Zaplacono = 0,
