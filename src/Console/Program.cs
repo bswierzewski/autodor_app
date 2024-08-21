@@ -6,12 +6,22 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 var configuration = CreateConfigurationBuilder()
     .Build();
 
 using IHost host = CreateHostBuilder()
     .Build();
+
+/// Logger configuration
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File(
+        path: Path.Combine("Logs", "log.txt"),
+        rollingInterval: RollingInterval.Day
+        )
+    .CreateLogger();
 
 using var scope = host.Services.CreateScope();
 var services = scope.ServiceProvider;
@@ -27,7 +37,7 @@ try
 }
 catch (Exception e)
 {
-    Console.WriteLine(e.Message);
+    Log.Logger.Error(e, e.Message);
 
     await services.GetRequiredService<ISendGridService>().SendEmail(["swierzewski.bartosz@gmail.com"], "Error", e.Message);
 }
@@ -37,9 +47,10 @@ IHostBuilder CreateHostBuilder()
     return Host.CreateDefaultBuilder()
     .ConfigureServices(services =>
     {
-
         services.AddApplicationServices(configuration);
         services.AddInfrastructureServices(configuration);
+
+        services.AddSerilog();
 
         services.AddScoped<IUser, User>();
     });

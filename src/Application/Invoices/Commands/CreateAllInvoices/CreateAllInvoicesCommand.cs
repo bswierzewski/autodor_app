@@ -6,6 +6,7 @@ using Application.Invoices.Commands.DTOs;
 using Application.Invoices.Extensions;
 using AutoMapper;
 using Domain.Entities;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Text;
 using System.Text.Json;
@@ -25,7 +26,8 @@ public class CreateAllInvoicesCommandHandler(IMapper mapper,
     IContractorService contractorService,
     ISendGridService sendGridService,
     IOptions<SendGridOptions> sendgridOptions,
-    IOptions<PolcarOptions> polcarOptions) : IRequestHandler<CreateAllInvoicesCommand, Unit>
+    IOptions<PolcarOptions> polcarOptions,
+    ILogger<CreateAllInvoicesCommandHandler> logger) : IRequestHandler<CreateAllInvoicesCommand, Unit>
 {
     public async Task<Unit> Handle(CreateAllInvoicesCommand request, CancellationToken cancellationToken)
     {
@@ -92,6 +94,8 @@ public class CreateAllInvoicesCommandHandler(IMapper mapper,
                         Informacja = ex.Message
                     }
                 });
+
+                logger.LogError(ex, ex.Message);
             }
         }
 
@@ -124,19 +128,23 @@ public class CreateAllInvoicesCommandHandler(IMapper mapper,
         var correctResponses = responses.Where(x => x.Response.Kod == 0).ToList();
         var errorResponses = responses.Where(x => x.Response.Kod > 0).ToList();
 
+        sb.AppendLine("<pre>");
+
         if (correctResponses.Count > 0)
         {
-            sb.Append("<strong>Poprawinie wystawiono faktury dla:</strong>");
+            sb.AppendLine("<strong>Poprawinie wystawiono faktury dla:</strong>");
             foreach (var response in correctResponses)
-                sb.Append($"<br>{response}");
+                sb.AppendLine($"    {response}");
         }
 
         if (errorResponses.Count > 0)
         {
-            sb.Append("<strong>Wykryto błąd dla:</strong>");
+            sb.AppendLine("<strong>Wykryto błąd dla:</strong>");
             foreach (var response in errorResponses)
-                sb.Append($"<br>{response}");
+                sb.AppendLine($"    {response}");
         }
+
+        sb.AppendLine("</pre>");
 
         return sb.ToString();
     }
