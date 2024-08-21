@@ -1,5 +1,5 @@
-﻿using Application.Invoice.Commands.CreateInvoice;
-using Application.Invoices.Commands.CreateInvoice;
+﻿using Application.Invoices.Commands.CreateInvoice;
+using Application.Invoices.Commands.DTOs;
 using MediatR;
 using Web.Infrastructure;
 

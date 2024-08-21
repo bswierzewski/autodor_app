@@ -1,4 +1,4 @@
-﻿using Application.Invoice.Commands.CreateInvoice;
+﻿using Application.Invoices.Commands.DTOs;
 
 namespace Application.Common.Interfaces;
 

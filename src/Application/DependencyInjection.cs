@@ -27,6 +27,7 @@ public static class DependencyInjection
         services.Configure<PolcarOptions>(configuration.GetSection("Credentials:Polcar"));
         services.Configure<MongoDBOptions>(configuration.GetSection("Credentials:MongoDB"));
         services.Configure<IFirmaOptions>(configuration.GetSection("Credentials:IFirma"));
+        services.Configure<SendGridOptions>(configuration.GetSection("SendGrid"));
 
         return services;
     }

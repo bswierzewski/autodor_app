@@ -1,5 +1,6 @@
 ﻿using Application.Common.Interfaces;
-using Application.Invoice.Commands.CreateInvoice;
+using Application.Invoices.Commands.DTOs;
+using Application.Invoices.Extensions;
 using Application.Orders.Queries;
 using AutoMapper;
 using Domain.Entities;
@@ -74,24 +75,15 @@ public class CreateInvoiceCommandHandler(IMapper mapper,
 
     private InvoiceDto CreateInvoiceDto(CreateInvoiceCommand request, List<Pozycje> pozycje)
     {
+        var invoice = InvoiceExtensions.CreateDefaultInvoiceDto(pozycje);
+
         var kontrahent = mapper.Map<Kontrahent>(request.Contractor);
 
-        return new InvoiceDto()
-        {
-            Numer = request.InvoiceNumber, // null (kolejny numer z podanej serii numeracji)
-            MiejsceWystawienia = "Leszno",
-            TerminPlatnosci = DateTime.Today.AddDays(14).ToString("yyyy-MM-dd"),
-            Zaplacono = 0,
-            ZaplaconoNaDokumencie = 0,
-            LiczOd = "BRT",
-            DataWystawienia = request.IssueDate.ToString("yyyy-MM-dd"),
-            DataSprzedazy = request.SaleDate.ToString("yyyy-MM-dd"),
-            FormatDatySprzedazy = "DZN",
-            SposobZaplaty = "PRZ",
-            RodzajPodpisuOdbiorcy = "OUP",
-            Kontrahent = kontrahent,
-            NazwaSeriiNumeracji = "Domyślna roczna",
-            Pozycje = pozycje.ToArray(),
-        };
+        invoice.Numer = request.InvoiceNumber;
+        invoice.DataWystawienia = request.IssueDate.ToString("yyyy-MM-dd");
+        invoice.DataSprzedazy = request.SaleDate.ToString("yyyy-MM-dd");
+        invoice.Kontrahent = kontrahent;
+
+        return invoice;
     }
 }

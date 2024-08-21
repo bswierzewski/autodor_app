@@ -1,5 +1,8 @@
 ﻿using Application.Common.Interfaces;
+using Application.Interfaces;
+using Application.Invoices.Commands.CreateAllInvoices;
 using Infrastructure;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,11 +18,18 @@ var services = scope.ServiceProvider;
 
 try
 {
-    await services.GetRequiredService<App>().Run();
+    await services.GetRequiredService<ISender>()
+        .Send(new CreateAllInvoicesCommand
+        {
+            DateFrom = DateTime.Now.AddDays(-14),
+            DateTo = DateTime.Now
+        });
 }
 catch (Exception e)
 {
     Console.WriteLine(e.Message);
+
+    await services.GetRequiredService<ISendGridService>().SendEmail(["swierzewski.bartosz@gmail.com"], "Error", e.Message);
 }
 
 IHostBuilder CreateHostBuilder()
@@ -32,8 +42,6 @@ IHostBuilder CreateHostBuilder()
         services.AddInfrastructureServices(configuration);
 
         services.AddScoped<IUser, User>();
-        services.AddScoped<App>();
-
     });
 }
 

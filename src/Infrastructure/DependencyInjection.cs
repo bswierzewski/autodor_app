@@ -1,8 +1,10 @@
 ﻿using Application.Common.Interfaces;
+using Application.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Data.Interceptors;
 using Infrastructure.Services;
 using Infrastructure.Services.Polcar;
+using Infrastructure.Services.SendGrid;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -37,6 +39,7 @@ public static class DependencyInjection
         services.AddScoped<IProductsService, ProductsService>();
         services.AddScoped<IFirmaService, FirmaService>();
         services.AddScoped<IContractorService, ContractorService>();
+        services.AddScoped<ISendGridService, SendGridService>();
 
         services.AddSingleton(s 
             => new MongoClient(configuration["Credentials:MongoDB:ConnectionURI"]).GetDatabase(configuration["Credentials:MongoDB:DatabaseName"]));

@@ -1,4 +1,4 @@
-﻿namespace Application.Invoice.Commands.CreateInvoice;
+﻿namespace Application.Invoices.Commands.DTOs;
 
 public class InvoiceDto
 {
