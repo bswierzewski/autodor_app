@@ -1,11 +1,13 @@
 ﻿using Application.Common.Interfaces;
 using Application.Interfaces;
 using Application.Invoices.Commands.CreateAllInvoices;
+using CommandLine;
 using Infrastructure;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Serilog;
 
 var configuration = CreateConfigurationBuilder()
@@ -28,11 +30,13 @@ var services = scope.ServiceProvider;
 
 try
 {
+    var options = services.GetRequiredService<IOptions<Options>>();
+
     await services.GetRequiredService<ISender>()
         .Send(new CreateAllInvoicesCommand
         {
-            DateFrom = DateTime.Now.AddDays(-14),
-            DateTo = DateTime.Now
+            DateFrom = options.Value.From,
+            DateTo = options.Value.To
         });
 }
 catch (Exception e)
@@ -49,6 +53,9 @@ IHostBuilder CreateHostBuilder()
     {
         services.AddApplicationServices(configuration);
         services.AddInfrastructureServices(configuration);
+
+        services.AddOptions<Options>()
+            .Configure(opt => Parser.Default.ParseArguments(() => opt, Environment.GetCommandLineArgs()));
 
         services.AddSerilog();
 
