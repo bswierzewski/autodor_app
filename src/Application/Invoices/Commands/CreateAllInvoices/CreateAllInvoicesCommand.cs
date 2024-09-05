@@ -34,6 +34,10 @@ public class CreateAllInvoicesCommandHandler(IMapper mapper,
     {
         var orders = new List<Order>();
         var responses = new List<InvoiceResponseDto>();
+        
+        // Fetch products and contractors concurrently
+        var productsTask = productsService.GetProductsAsync();
+        var contractorsTask = contractorService.GetAsync();
 
         // Fetch all orders within the date range concurrently
         var allDates = DateTimeExtensions.EachDay(request.DateFrom, request.DateTo);
@@ -53,10 +57,6 @@ public class CreateAllInvoicesCommandHandler(IMapper mapper,
         var groupedOrders = orders
             .GroupBy(x => x.CustomerNumber)
             .ToDictionary(g => g.Key, g => g.ToList());
-
-        // Fetch products and contractors concurrently
-        var productsTask = productsService.GetProductsAsync();
-        var contractorsTask = contractorService.GetAsync();
 
         var products = await productsTask;
         var contractors = await contractorsTask;
