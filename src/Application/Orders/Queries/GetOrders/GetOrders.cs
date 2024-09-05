@@ -15,17 +15,14 @@ public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, IEnumerable
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
-    private readonly IProductsService _productsService;
     private readonly IDistributorsSalesService _distributorsSalesService;
 
-    public GetOrdersQueryHandler(IApplicationDbContext context, 
-        IMapper mapper, 
-        IProductsService productsService, 
+    public GetOrdersQueryHandler(IApplicationDbContext context,
+        IMapper mapper,
         IDistributorsSalesService distributorsSalesService)
     {
         _context = context;
         _mapper = mapper;
-        _productsService = productsService;
         _distributorsSalesService = distributorsSalesService;
     }
 
@@ -34,10 +31,23 @@ public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, IEnumerable
         var orders = new List<Order>();
 
         foreach (var date in DateTimeExtensions.EachDay(request.DateFrom, request.DateTo))
-        {
             orders.AddRange(await _distributorsSalesService.GetOrdersAsync(date));
-        }
 
-        return _mapper.Map<IEnumerable<OrderDto>>(orders);
+        // Fetch all orders within the date range concurrently
+        var allDates = DateTimeExtensions.EachDay(request.DateFrom, request.DateTo);
+        var allOrdersTasks = allDates.Select(_distributorsSalesService.GetOrdersAsync);
+        var ordersList = await Task.WhenAll(allOrdersTasks);
+        orders = ordersList.SelectMany(o => o).ToList();
+
+        var ordersToReturn = _mapper.Map<IEnumerable<OrderDto>>(orders).ToList();
+
+        var exludedOrders = _context.ExcludedOrders.Select(x => x.OrderId).ToHashSet();
+
+        ordersToReturn.ForEach(order =>
+        {
+            order.IsExcluded = exludedOrders.Contains(order.Id);
+        });
+
+        return ordersToReturn;
     }
 }

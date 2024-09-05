@@ -20,6 +20,7 @@ public class CreateAllInvoicesCommand : IRequest<Unit>
 }
 
 public class CreateAllInvoicesCommandHandler(IMapper mapper,
+    IApplicationDbContext context,
     IFirmaService firmaService,
     IDistributorsSalesService distributorsSalesService,
     IProductsService productsService,
@@ -34,14 +35,31 @@ public class CreateAllInvoicesCommandHandler(IMapper mapper,
         var orders = new List<Order>();
         var responses = new List<InvoiceResponseDto>();
 
-        foreach (var date in DateTimeExtensions.EachDay(request.DateFrom, request.DateTo))
-            orders.AddRange(await distributorsSalesService.GetOrdersAsync(date));
+        // Fetch all orders within the date range concurrently
+        var allDates = DateTimeExtensions.EachDay(request.DateFrom, request.DateTo);
+        var allOrdersTasks = allDates.Select(distributorsSalesService.GetOrdersAsync);
+        var ordersList = await Task.WhenAll(allOrdersTasks);
+        orders = ordersList.SelectMany(o => o).ToList();
 
-        var groupedOrders = orders.GroupBy(x => x.CustomerNumber)
-            .ToDictionary(o => o.Key, o => o.ToList());
+        // Get excluded orders as a HashSet to allow O(1) lookup
+        var excludedOrders = context.ExcludedOrders
+            .Select(x => x.OrderId)
+            .ToHashSet();
 
-        var products = await productsService.GetProductsAsync();
-        var contrators = await contractorService.GetAsync();
+        // Filter out excluded orders
+        orders = orders.Where(x => !excludedOrders.Contains(x.Id)).ToList();
+
+        // Group orders by CustomerNumber
+        var groupedOrders = orders
+            .GroupBy(x => x.CustomerNumber)
+            .ToDictionary(g => g.Key, g => g.ToList());
+
+        // Fetch products and contractors concurrently
+        var productsTask = productsService.GetProductsAsync();
+        var contractorsTask = contractorService.GetAsync();
+
+        var products = await productsTask;
+        var contractors = await contractorsTask;
 
         foreach (var groupedOrder in groupedOrders)
         {
@@ -69,7 +87,7 @@ public class CreateAllInvoicesCommandHandler(IMapper mapper,
                     });
                 }
 
-                var contractor = contrators.FirstOrDefault(x => x.NIP == groupedOrder.Key)
+                var contractor = contractors.FirstOrDefault(x => x.NIP == groupedOrder.Key)
                     ?? throw new Exception($"Podany CustomerNumber nie pasuje do żadnego kontrahenta. Zweryfikuj poprawność danych.");
 
                 var invoice = CreateInvoiceDto(contractor, pozycje);

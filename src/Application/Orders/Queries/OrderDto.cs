@@ -4,7 +4,7 @@ namespace Application.Orders.Queries
 {
     public class OrderDto
     {
-        public bool IsSelected { get; set; } = true;
+        public bool IsExcluded { get; set; }
         public DateTime Date { get; set; }
         public string Id { get; set; }
         public string Number { get; set; }

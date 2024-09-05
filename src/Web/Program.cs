@@ -20,11 +20,10 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+await app.InitialiseDatabaseAsync();
+
 if (app.Environment.IsDevelopment())
 {
-    // Seed database for development
-    await app.InitialiseDatabaseAsync();
-
     // Swagger
     app.UseSwagger();
     app.UseSwaggerUI();
