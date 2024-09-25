@@ -7,6 +7,9 @@
   </PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="itext.pdfhtml" Version="5.0.5" />
+		<PackageReference Include="itext7" Version="8.0.5" />
+		<PackageReference Include="itext7.bouncy-castle-adapter" Version="8.0.5" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
 		<PackageReference Include="MongoDB.Driver" Version="2.24.0" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />

@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Infrastructure.Data.Interceptors;
 using Infrastructure.Services;
 using Infrastructure.Services.Polcar;
+using Infrastructure.Services.Printer;
 using Infrastructure.Services.SendGrid;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -43,6 +44,8 @@ public static class DependencyInjection
 
         services.AddSingleton(s 
             => new MongoClient(configuration["Credentials:MongoDB:ConnectionURI"]).GetDatabase(configuration["Credentials:MongoDB:DatabaseName"]));
+
+        services.AddScoped<IPrintService, PdfPrintService>();
 
         return services;
     }
