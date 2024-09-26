@@ -8,20 +8,20 @@ public class PDFGeneratorService() : IPDFGeneratorService
     public byte[] Generate(string htmlContent)
     {
         using var memoryStream = new MemoryStream();
-        var converterProperties = GetConverterProperties();
+        //var converterProperties = GetConverterProperties();
 
-        HtmlConverter.ConvertToPdf(htmlContent, memoryStream, converterProperties);
+        HtmlConverter.ConvertToPdf(htmlContent, memoryStream);
 
         return memoryStream.ToArray();
     }
 
-    private ConverterProperties GetConverterProperties()
-    {
-        var converterProperties = new ConverterProperties();
-        var fontProvider = new iText.Layout.Font.FontProvider("Arial");
-        fontProvider.AddSystemFonts();
-        converterProperties.SetFontProvider(fontProvider);
+    //private ConverterProperties GetConverterProperties()
+    //{
+    //    var converterProperties = new ConverterProperties();
+    //    var fontProvider = new iText.Layout.Font.FontProvider("Arial");
+    //    fontProvider.AddSystemFonts();
+    //    converterProperties.SetFontProvider(fontProvider);
 
-        return converterProperties;
-    }
+    //    return converterProperties;
+    //}
 }
