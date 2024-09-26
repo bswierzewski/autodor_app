@@ -1,6 +1,8 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Common.Consts;
+using Application.Common.Interfaces;
 using Application.Interfaces;
 using Application.Invoices.Commands.DTOs;
+using Domain.Entities;
 
 namespace Application.Invoices.Commands.PrintInvoice;
 
@@ -10,50 +12,69 @@ public class PrintInvoiceCommand : IRequest<FileInvoiceResponseDto>
     public DateTime Date { get; set; }
 }
 
-public class CreateInvoiceCommandHandler(IPrintService printService,
+public class PrintInvoiceCommandHandler(
+    IPDFGeneratorService pdfGeneratorService,
     IDistributorsSalesService distributorsSalesService,
     IContractorService contractorService,
-    IProductsService productsService) : IRequestHandler<PrintInvoiceCommand, FileInvoiceResponseDto>
+    IProductsService productsService,
+    ICacheService cacheService,
+    IHtmlGeneratorService htmlTemplateGenerator) : IRequestHandler<PrintInvoiceCommand, FileInvoiceResponseDto>
 {
     public async Task<FileInvoiceResponseDto> Handle(PrintInvoiceCommand request, CancellationToken cancellationToken)
     {
+        var order = await GetOrderAsync(request);
+        var products = await GetProductsAsync();
+        var contractor = await GetContractorAsync(order.CustomerNumber);
+
+        // Enrich order with product names
+        EnrichOrderWithProductNames(order, products);
+
+        var htmlContent = htmlTemplateGenerator.Generate(contractor, order);
+        var content = pdfGeneratorService.Generate(htmlContent);
+
+        return CreateFileResponse(order, content);
+    }
+
+    private async Task<Order> GetOrderAsync(PrintInvoiceCommand request)
+    {
         var orders = await distributorsSalesService.GetOrdersAsync(request.Date);
+        return orders.FirstOrDefault(x => x.Id == request.OrderId)
+            ?? throw new Exception($"Order not found: {request.OrderId}");
+    }
 
-        var order = orders.Where(x => x.Id == request.OrderId).FirstOrDefault()
-            ?? throw new Exception($"Nie znaleziono zamówienia o id: {request.OrderId}");
+    private async Task<IDictionary<string, Product>> GetProductsAsync()
+    {
+        return await cacheService.GetOrCreateAsync(
+            CacheConsts.Products,
+            productsService.GetProductsAsync,
+            TimeSpan.FromHours(1));
+    }
 
-        var products = await productsService.GetProductsAsync();
+    private async Task<Contractor> GetContractorAsync(string customerNumber)
+    {
+        var contractors = await contractorService.GetAsync();
+        return contractors.FirstOrDefault(x => x.NIP == customerNumber);
+    }
 
-        var pozycje = new List<Pozycje>();
-
+    private void EnrichOrderWithProductNames(Order order, IDictionary<string, Product> products)
+    {
         foreach (var item in order.Items)
         {
-            if (item.TotalPrice <= 0)
-                continue;
-
             var existsName = products.ContainsKey(item?.PartNumber ?? "");
-
-            pozycje.Add(new Pozycje
-            {
-                Ilosc = item.Quantity,
-                CenaJednostkowa = (float)Math.Round(item.TotalPrice * 1.23M, 2),
-                Jednostka = "sztuk",
-                NazwaPelna = $"{(existsName ? products[item.PartNumber].Name : item.PartNumber)}{(existsName ? $" ({item.PartNumber})" : "")}",
-                StawkaVat = 0.23M,
-                TypStawkiVat = "PRC"
-            });
+            item.PartName = existsName
+                ? $"{products[item.PartNumber].Name} ({item.PartNumber})"
+                : item.PartNumber;
         }
+    }
 
-        var contractors = await contractorService.GetAsync();
-
-        var contractor = contractors.Where(x => x.NIP == order.CustomerNumber).FirstOrDefault();
-
-        // Return the file as a downloadable response
+    private FileInvoiceResponseDto CreateFileResponse(Order order, byte[] content)
+    {
         return new FileInvoiceResponseDto
         {
             FileName = $"{order.Number}.pdf",
             ContentType = "application/pdf",
-            Content = printService.Print(contractor, order, pozycje)
+            Content = content
         };
     }
 }
+

@@ -1,26 +1,21 @@
 ﻿using Application.Interfaces;
-using Application.Invoices.Commands.DTOs;
 using Domain.Entities;
-using iText.Html2pdf;
 using System.Reflection;
 
-namespace Infrastructure.Services.Printer;
+namespace Infrastructure.Services.Generator;
 
-public class PdfPrintService() : IPrintService
+public class HtmlGeneratorService : IHtmlGeneratorService
 {
-    public byte[] Print(Contractor contractor, Order order, List<Pozycje> items)
+    public string Generate(Contractor contractor, Order order)
     {
-        // Convert the embedded logo image to Base64
-        string base64Logo = ConvertImageToBase64("Infrastructure.Resources.logo.png");
+        string base64Logo = ConvertResourceToBase64("Infrastructure.Resources.Images.Logo.png");
 
-        // Start creating the HTML content
-        string htmlContent = $@"
+        var htmlContent = $@"
         <html>
             <head>
                 <meta charset='utf-8' />
                 <title>WZ (Wydanie Zewnętrzne)</title>
                 <style>
-                    body {{ font-family: sans-serif; }}
                     h1 {{ text-align: center; }}
                     table {{ width: 100%; border-collapse: collapse; margin-top: 20px; }}
                     th, td {{ border: 1px solid #000; padding: 8px; text-align: left; }}
@@ -45,23 +40,22 @@ public class PdfPrintService() : IPrintService
                         <tr>
                             <th>Nazwa</th>
                             <th>Ilość</th>
-                            <th>Cena Jednostkowa (PLN)</th>
-                            <th>Wartość (PLN)</th>
-                            <th>Stawka VAT</th>
+                            <th>Wartość netto</th>
+                            <th>Wartość VAT</th>
+                            <th>Wartość Brutto</th>
                         </tr>
                     </thead>
                     <tbody>";
 
-        // Loop through items to create table rows
-        foreach (var item in items)
+        foreach (var item in order.Items)
         {
             htmlContent += $@"
             <tr>
-                <td>{item.NazwaPelna}</td>
-                <td>{item.Ilosc}</td>
-                <td>{item.CenaJednostkowa:F2}</td>
-                <td>{item.CenaJednostkowa * item.Ilosc:F2}</td>
-                <td>{item.StawkaVat}%</td>
+                <td>{item.PartName}</td>
+                <td>{item.Quantity}</td>
+                <td>{item.TotalPrice:F2} zł</td>
+                <td>{Math.Round(item.TotalPrice * 0.23M, 2):F2} zł</td>
+                <td>{Math.Round(item.TotalPrice * 1.23M, 2):F2} zł</td>
             </tr>";
         }
 
@@ -71,24 +65,16 @@ public class PdfPrintService() : IPrintService
             </body>
         </html>";
 
-        using var memoryStream = new MemoryStream();
-
-        // Convert HTML to PDF and write to MemoryStream
-        HtmlConverter.ConvertToPdf(htmlContent, memoryStream);
-
-        return memoryStream.ToArray(); // Return byte array
+        return htmlContent;
     }
 
-    // Helper method to convert embedded image to Base64
-    private string ConvertImageToBase64(string resourcePath)
+    private string ConvertResourceToBase64(string resourcePath)
     {
-        using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourcePath) 
+        using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourcePath)
             ?? throw new FileNotFoundException($"Resource not found: {resourcePath}");
 
         using var memoryStream = new MemoryStream();
         stream.CopyTo(memoryStream);
-        byte[] imageBytes = memoryStream.ToArray();
-        return Convert.ToBase64String(imageBytes);
+        return Convert.ToBase64String(memoryStream.ToArray());
     }
-
 }

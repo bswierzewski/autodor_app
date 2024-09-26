@@ -8,10 +8,11 @@
 
   <ItemGroup>
     <None Remove="Resources\logo.png" />
+    <None Remove="Resources\SpaceMono-Regular.ttf" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\logo.png" />
+    <EmbeddedResource Include="Resources\Images\Logo.png" />
   </ItemGroup>
 
 	<ItemGroup>
@@ -36,6 +37,8 @@
 
 	<ItemGroup>
 	  <Folder Include="Data\Configurations\" />
+	  <Folder Include="Interfaces\" />
+	  <Folder Include="Services\Printer\" />
 	</ItemGroup>
 
 </Project>
