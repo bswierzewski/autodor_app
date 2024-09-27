@@ -7,11 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\logo.png" />
-    <None Remove="Resources\SpaceMono-Regular.ttf" />
+    <None Remove="Resources\Fonts\Arial.ttf" />
+    <None Remove="Resources\Fonts\Arialbd.ttf" />
+    <None Remove="Resources\Fonts\Arialbi.ttf" />
+    <None Remove="Resources\Fonts\Ariali.ttf" />
+    <None Remove="Resources\Logo.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Fonts\Arial.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Arialbd.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Arialbi.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ariali.ttf" />
     <EmbeddedResource Include="Resources\Images\Logo.png" />
   </ItemGroup>
 
@@ -37,8 +44,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Data\Configurations\" />
-	  <Folder Include="Interfaces\" />
-	  <Folder Include="Services\Printer\" />
 	</ItemGroup>
 
 </Project>

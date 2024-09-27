@@ -2,9 +2,11 @@
 using Application.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Data.Interceptors;
+using Infrastructure.Interfaces;
 using Infrastructure.Services;
 using Infrastructure.Services.Cache;
 using Infrastructure.Services.Generator;
+using Infrastructure.Services.iText;
 using Infrastructure.Services.Polcar;
 using Infrastructure.Services.SendGrid;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +51,8 @@ public static class DependencyInjection
 
         services.AddSingleton(s 
             => new MongoClient(configuration["Credentials:MongoDB:ConnectionURI"]).GetDatabase(configuration["Credentials:MongoDB:DatabaseName"]));
+
+        services.AddSingleton<ICustomPropertiesProvider>(s => new CustomPropertiesProvider());
 
         services.AddScoped<IPDFGeneratorService, PDFGeneratorService>();
 

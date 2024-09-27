@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces;
 using Domain.Entities;
-using System.Reflection;
+using Infrastructure.Common;
 
 namespace Infrastructure.Services.Generator;
 
@@ -8,7 +8,7 @@ public class HtmlGeneratorService : IHtmlGeneratorService
 {
     public string Generate(Contractor contractor, Order order)
     {
-        string base64Logo = ConvertResourceToBase64("Infrastructure.Resources.Images.Logo.png");
+        string base64Logo = ResourcesConverter.ConvertResourceToBase64("Infrastructure.Resources.Images.Logo.png");
 
         var htmlContent = $@"
         <html>
@@ -16,6 +16,7 @@ public class HtmlGeneratorService : IHtmlGeneratorService
                 <meta charset='utf-8' />
                 <title>WZ (Wydanie Zewnętrzne)</title>
                 <style>
+                    body {{ font-family: Arial; }}
                     h1 {{ text-align: center; }}
                     table {{ width: 100%; border-collapse: collapse; margin-top: 20px; }}
                     th, td {{ border: 1px solid #000; padding: 8px; text-align: left; }}
@@ -66,15 +67,5 @@ public class HtmlGeneratorService : IHtmlGeneratorService
         </html>";
 
         return htmlContent;
-    }
-
-    private string ConvertResourceToBase64(string resourcePath)
-    {
-        using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourcePath)
-            ?? throw new FileNotFoundException($"Resource not found: {resourcePath}");
-
-        using var memoryStream = new MemoryStream();
-        stream.CopyTo(memoryStream);
-        return Convert.ToBase64String(memoryStream.ToArray());
     }
 }
