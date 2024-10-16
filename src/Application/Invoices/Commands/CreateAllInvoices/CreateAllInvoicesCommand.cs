@@ -87,7 +87,7 @@ public class CreateAllInvoicesCommandHandler(IMapper mapper,
                     });
                 }
 
-                var contractor = contractors.FirstOrDefault(x => x.NIP == groupedOrder.Key)
+                var contractor = contractors.FirstOrDefault(x => groupedOrder.Key.Contains(x.NIP))
                     ?? throw new Exception($"Podany CustomerNumber nie pasuje do żadnego kontrahenta. Zweryfikuj poprawność danych.");
 
                 var invoice = CreateInvoiceDto(contractor, pozycje);
