@@ -24,7 +24,8 @@ public class PrintInvoiceCommandHandler(
     {
         var order = await GetOrderAsync(request);
         var products = await GetProductsAsync();
-        var contractor = await GetContractorAsync(order.CustomerNumber);
+        var contractor = await GetContractorAsync(order.CustomerNumber) 
+            ?? throw new Exception($"Contractor for {order.CustomerNumber} not found");
 
         // Enrich order with product names
         EnrichOrderWithProductNames(order, products);
@@ -53,7 +54,7 @@ public class PrintInvoiceCommandHandler(
     private async Task<Contractor> GetContractorAsync(string customerNumber)
     {
         var contractors = await contractorService.GetAsync();
-        return contractors.FirstOrDefault(x => x.NIP == customerNumber);
+        return contractors.FirstOrDefault(x => customerNumber.Contains(x.NIP));
     }
 
     private void EnrichOrderWithProductNames(Order order, IDictionary<string, Product> products)
